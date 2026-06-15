@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Báo cáo Chiến lược Nghị quyết 10-NQ/TW</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #0a255c; /* Xanh navy đậm chính xác */
+            --secondary-color: #ef6c00; /* Màu cam số liệu */
+            --chart-bar-color: #e65100; /* Màu cam đậm của cột biểu đồ */
+            --bg-color: #fcf8f2; /* Màu nền be/kem toàn trang */
+            --card-bg: #ffffff;
+            --highlight-bg: #fcecdb; /* Màu nền be nhạt tạo điểm nhấn */
+            --text-main: #000000; /* CHUYỂN TOÀN BỘ SANG MÀU ĐEN THUẦN */
+            --text-sub: #000000;  /* CHUYỂN TOÀN BỘ SANG MÀU ĐEN THUẦN */
+            --border-color: #e2d6c5;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Sans', sans-serif;
+            font-size: 12px;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding: 40px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px; /* Khoảng cách phân tách giữa Trang 1 và Trang 2 */
+        }
+
+        /* ĐỔI SANG TỶ LỆ CHUẨN 16:9 CO GIÃN TỰ ĐỘNG THEO MÀN HÌNH - CHỐNG TO QUÁ KHỔ */
+        .page-container {
+            width: 95vw;
+            max-width: 1280px; 
+            height: calc(95vw * 9 / 16);
+            max-height: 720px; 
+            background-color: var(--card-bg);
+            border: none; 
+            border-radius: 0px; 
+            padding: 30px 40px 20px 40px; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden; 
+        }
+
+        /* HEADER */
+        .header {
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .header h1 {
+            font-size: 20px;
+            color: var(--primary-color);
+            text-transform: none;
+            margin-bottom: 4px;
+            font-weight: 800;
+            line-height: 1.3;
+        }
+
+        .header .subtitle {
+            font-size: 12px;
+            color: var(--text-sub);
+            font-weight: 600;
+            text-transform: none;
+            letter-spacing: 0.3px;
+        }
+
+        /* LAYOUTS TRANG 1 */
+        .grid-layout-2col {
+            display: grid;
+            grid-template-columns: 7fr 5fr;
+            gap: 28px;
+        }
+
+        /* LAYOUT TRANG 2 */
+        .grid-layout-vertical-t2 {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .grid-layout-2col-equal {
+            display: flex;
+            gap: 20px;
+            align-items: stretch; 
+        }
+
+        .grid-layout-2col-equal .insight-card {
+            flex: 1; 
+        }
+
+        .section-title {
+            font-size: 12.5px;
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            border-left: 4px solid var(--primary-color);
+            padding-left: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .left-column {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        /* TRANG 1 ELEMENTS */
+        .metrics-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .metric-card {
+            background: #fafafa;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .metric-label {
+            font-size: 11.5px;
+            color: var(--text-sub);
+            font-weight: 600;
+            margin-bottom: 4px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .metric-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--secondary-color);
+            margin-bottom: 2px;
+        }
+
+        .metric-sub {
+            font-size: 10.5px;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .chart-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            align-items: flex-end;
+            padding: 5px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .chart-bar-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .chart-bar {
+            width: 35px;
+            background: linear-gradient(to top, var(--chart-bar-color), #ffb74d);
+            border-radius: 4px 4px 0 0;
+            margin-bottom: 6px;
+        }
+
+        .bar-1 { height: 60px; }
+        .bar-2 { height: 90px; }
+        .bar-3 { height: 45px; }
+
+        .chart-value {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--chart-bar-color);
+            margin-bottom: 2px;
+        }
+
+        .chart-label {
+            font-size: 10.5px;
+            color: var(--text-sub);
+            line-height: 1.3;
+        }
+
+        .vision-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .vision-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            background: var(--highlight-bg);
+            padding: 8px 10px;
+            border-radius: 4px;
+            border: 1px solid #f5dec2;
+        }
+
+        .vision-number {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary-color);
+            line-height: 1;
+        }
+
+        .vision-text {
+            font-size: 11px;
+            color: var(--text-main);
+            line-height: 1.3;
+        }
+
+        .right-column {
+            border-left: 1px solid var(--border-color);
+            padding-left: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .policy-list {
+            list-style: none;
+        }
+
+        .policy-item {
+            position: relative;
+            padding-left: 14px;
+            margin-bottom: 12px;
+            font-size: 11px;
+            line-height: 1.5;
+            color: var(--text-main);
+        }
+
+        .policy-item::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            top: -2px;
+            color: var(--secondary-color);
+            font-size: 16px;
+        }
+
+        .core-sectors {
+            margin-top: 10px;
+            background: var(--highlight-bg);
+            padding: 12px;
+            border-radius: 4px;
+            border: 1px dashed var(--secondary-color);
+        }
+
+        .core-sectors h4 {
+            font-size: 11px;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .tag {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            padding: 3px 6px;
+            border-radius: 16px;
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        /* TRANG 2 ELEMENTS */
+        .insight-card {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            justify-content: flex-start;
+        }
+
+        .insight-badge {
+            background: var(--primary-color);
+            color: #ffffff;
+            padding: 3px 6px;
+            border-radius: 2px;
+            font-weight: 700;
+            font-size: 10px;
+            align-self: flex-start;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            width: 100%; 
+        }
+
+        .context-box {
+            background: #fafafa;
+            border-left: 3px solid var(--secondary-color);
+            padding: 8px 10px;
+            line-height: 1.45;
+            color: var(--text-main);
+            text-align: justify;
+        }
+
+        .context-box strong {
+            color: var(--secondary-color);
+            font-weight: 700;
+        }
+
+        .analysis-box {
+            line-height: 1.45;
+            color: var(--text-sub);
+            text-align: justify;
+        }
+
+        .analysis-box strong {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .formula-container {
+            background: var(--highlight-bg);
+            border: 1px solid #f5dec2;
+            border-radius: 4px;
+            padding: 12px 16px;
+        }
+
+        .formula-title {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            margin-bottom: 2px;
+        }
+
+        .formula-desc {
+            line-height: 1.4;
+            color: var(--text-sub);
+            margin-bottom: 8px;
+            font-size: 11px;
+        }
+
+        .formula-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .formula-item {
+            background: #ffffff;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+            line-height: 1.45;
+            text-align: justify;
+            font-size: 11px;
+        }
+
+        .formula-item h5 {
+            color: var(--primary-color);
+            font-size: 11.5px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 2px;
+            display: block;
+        }
+
+        .formula-item strong {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        /* BOTTOM LABELS */
+        .footer-wrapper {
+            margin-top: 5px;
+            padding-top: 8px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-note {
+            font-size: 10.5px;
+            color: #000000; /* Đổi ghi chú footer sang màu đen */
+        }
+
+        .page-number {
+            font-size: 10.5px;
+            color: #000000; /* Đổi số trang sang màu đen */
+            font-weight: 600;
+        }
+
+        @media print {
+            body { padding: 0; gap: 0; background-color: #ffffff; }
+            .page-container { box-shadow: none; page-break-inside: avoid; break-inside: avoid; width: 100vw; height: 100vh; max-width: none; max-height: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-container">
+        <div>
+            <div class="header">
+                <h1>Nghị quyết 10-NQ/TW</h1>
+                <div class="subtitle">Định hướng chiến lược phát triển kinh tế có vốn đầu tư nước ngoài (FDI) đến năm 2030, tầm nhìn 2045</div>
+            </div>
+
+            <div class="grid-layout-2col">
+                <div class="left-column">
+                    <div>
+                        <div class="section-title">Mục tiêu thu hút vốn FDI (Giai đoạn 2026 - 2030)</div>
+                        <div class="metrics-row">
+                            <div class="metric-card">
+                                <div class="metric-label">Vốn đăng ký</div>
+                                <div class="metric-value">US$200-300bn</div>
+                                <div class="metric-sub">Trung bình US$40-50bn/năm</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-label">Vốn thực hiện</div>
+                                <div class="metric-value">US$150-200bn</div>
+                                <div class="metric-sub">Trung bình US$30-40bn/năm</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-label">Tập đoàn toàn cầu</div>
+                                <div class="metric-value">+30%</div>
+                                <div class="metric-sub">Số lượng thuộc Fortune 500</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="section-title">Lan tỏa & Kết nối chuỗi cung ứng (Đến năm 2030)</div>
+                        <div class="chart-container">
+                            <div class="chart-bar-wrapper">
+                                <div class="chart-value">45 - 50%</div>
+                                <div class="chart-bar bar-1"></div>
+                                <div class="chart-label">Tỉ lệ nội địa hóa các ngành công nghiệp chủ lực</div>
+                            </div>
+                            <div class="chart-bar-wrapper">
+                                <div class="chart-value">10.000 DN</div>
+                                <div class="chart-bar bar-2"></div>
+                                <div class="chart-label">Tham gia vào chuỗi cung ứng của khối FDI</div>
+                            </div>
+                            <div class="chart-bar-wrapper">
+                                <div class="chart-value">500 - 1.000</div>
+                                <div class="chart-bar bar-3"></div>
+                                <div class="chart-label">Doanh nghiệp Việt Nam là nhà cung ứng cấp I</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="section-title">Tầm nhìn dài hạn & Bền vững</div>
+                        <div class="vision-grid">
+                            <div class="vision-item">
+                                <div class="vision-number">25%</div>
+                                <div class="vision-text">Tỉ trọng vốn FDI trong tổng vốn đầu tư toàn xã hội vào năm 2045</div>
+                            </div>
+                            <div class="vision-item">
+                                <div class="vision-number">30%</div>
+                                <div class="vision-text">Đóng góp trực tiếp vào tổng GDP cả nước đến năm 2045</div>
+                            </div>
+                            <div class="vision-item">
+                                <div class="vision-number">80%</div>
+                                <div class="vision-text">Tỉ trọng lao động qua đào tạo trong cơ cấu sử dụng lao động (2030)</div>
+                            </div>
+                            <div class="vision-item">
+                                <div class="vision-number">10%</div>
+                                <div class="vision-text">Khu công nghiệp chuyển đổi hoặc xây mới đạt chuẩn sinh thái (2030)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="right-column">
+                    <div>
+                        <div class="section-title">Định hướng chất lượng & Quản trị</div>
+                        <ul class="policy-list">
+                            <li class="policy-item">
+                                <strong>Ưu tiên chất lượng dòng vốn:</strong> Hướng tới mục tiêu 75% vốn đầu tư đến từ các nền kinh tế phát triển có công nghệ nguồn và quản trị hiện đại.
+                            </li>
+                            <li class="policy-item">
+                                <strong>Nâng cao nội lực nội địa:</strong> Thúc đẩy chuyển giao công nghệ, tăng mạnh tỷ lệ linh kiện nội địa hóa thông qua các cơ chế kết nối chuỗi cung ứng linh hoạt.
+                            </li>
+                            <li class="policy-item">
+                                <strong>Chuyển đổi hạ tầng xanh:</strong> Chuẩn hóa mô hình khu công nghiệp sinh thái, giảm phát thải carbon và nâng cao chất lượng nguồn nhân lực kỹ thuật cao đạt mức 80%.
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="core-sectors">
+                        <h4>Lĩnh vực "Lõi" ưu tiên thu hút đầu tư</h4>
+                        <div class="tag-container">
+                            <span class="tag">Chip bán dẫn</span>
+                            <span class="tag">Công nghiệp điện tử</span>
+                            <span class="tag">Thiết bị số</span>
+                            <span class="tag">Trí tuệ nhân tạo (AI)</span>
+                            <span class="tag">Điện toán đám mây</span>
+                            <span class="tag">Dữ liệu lớn (Big Data)</span>
+                            <span class="tag">Internet vạn vật (IoT)</span>
+                            <span class="tag">Công nghệ sinh học</span>
+                            <span class="tag">Y sinh tiên tiến</span>
+                            <span class="tag">Công nghiệp xanh</span>
+                            <span class="tag">Năng lượng sạch</span>
+                            <span class="tag">Logistics hiện đại</span>
+                            <span class="tag">Blockchain</span>
+                            <span class="tag">Vật liệu tiên tiến</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-wrapper">
+            <div class="footer-note">Nguồn: Ban Chấp hành Trung ương Đảng.</div>
+            <div class="page-number">TRANG 1</div>
+        </div>
+    </div>
+
+
+    <div class="page-container">
+        <div>
+            <div class="header">
+                <h1>Góc nhìn chiến lược: Thước đo cho chu kỳ FDI thế hệ mới</h1>
+                <div class="subtitle">Từ định hướng chính sách đến thực thi các giải pháp hạ tầng nền tảng chiến lược</div>
+            </div>
+
+            <div class="grid-layout-vertical-t2">
+                
+                <div class="grid-layout-2col-equal">
+                    
+                    <div class="insight-card">
+                        <div class="insight-badge">1. Sự dịch chuyển dòng vốn toàn cầu và định hướng trục công nghệ lõi</div>
+                        <div class="context-box">
+                            Xu hướng phân hóa rõ rệt làm giảm vai trò của chi phí nhân công thấp. Theo UNCTAD, dòng vốn vào ngành thâm dụng lao động sụt giảm mạnh, điển hình năm 2025, dệt may ghi nhận <strong>mức giảm 40% YoY</strong>. Ngược lại, nguồn vốn tập trung vào công nghệ lõi: ngành bán dẫn <strong>tăng 35% YoY</strong> và các dự án Data Center hiện chiếm <strong>20% tổng số dự án</strong> toàn cầu.
+                        </div>
+                        <div class="analysis-box">
+                            <strong>Nhận định:</strong> Nghị quyết 10-NQ/TW đóng vai trò là khuôn khổ pháp lý hoàn thiện nhằm tái cấu trúc dòng vốn FDI vào Việt Nam. Sự phát triển mạnh mẽ của hạ tầng Trí tuệ nhân tạo (AI) toàn cầu đặt ra yêu cầu cấp thiết cho nền kinh tế trong việc chuyển dịch trục thu hút đầu tư sang ba lĩnh vực trọng tâm: Công nghiệp bán dẫn, công nghệ AI và Trung tâm dữ liệu, nhằm duy trì vị thế trong chuỗi cung ứng thế hệ mới.
+                        </div>
+                    </div>
+
+                    <div class="insight-card">
+                        <div class="insight-badge">2. Tối ưu hóa giá trị lưu giữ nội địa thay vì quy mô USD</div>
+                        <div class="context-box">
+                            Độ mở nền kinh tế Việt Nam ở mức cao với tỷ lệ <strong>tổng kim ngạch XNK/GDP vượt 190% năm 2025</strong>. Mặc dù khối FDI đóng góp hơn 70% tổng kim ngạch xuất khẩu, song theo JETRO (2025), tỷ lệ nội địa hóa hiện tại chỉ dao động trong <strong>biên độ 37% - 38% (năm 2024-2025)</strong> (thấp hơn đáng kể so với mức 60% của Thái Lan và 70% của Trung Quốc).
+                        </div>
+                        <div class="analysis-box">
+                            <strong>Thay đổi thước đo hiệu quả:</strong> Tiêu chí đánh giá hiệu quả thực thi Nghị quyết 10-NQ/TW cần thay đổi từ quy mô vốn đăng ký (giá trị tỷ US$) sang hàm lượng giá trị gia tăng lưu giữ lại trong nền kinh tế nội địa. Mục tiêu chiến lược là <strong>nâng cao vị thế và giảm sự phụ thuộc vào gia công (tạm nhập - tái xuất)</strong>, đưa các "sếu đầu đàn" nội địa (như FPT, Viettel) tham gia sâu vào các công đoạn có biên lợi nhuận cao như R&D, thiết kế vi mạch (IC Design), thay vì tập trung vào phân khúc biên lợi nhuận thấp như đóng gói và kiểm thử (OSAT).
+                        </div>
+                    </div>
+
+                </div>
+
+                <div>
+                    <div class="section-title">Giải pháp thực thi: Tháo gỡ rào cản hạ tầng và nhân lực</div>
+                    <div class="formula-container">
+                        <div class="section-title">Động lực thực thi — Hạ tầng chiến lược</div>
+                        <div class="formula-desc">Khi biên độ cạnh tranh về ưu đãi thuế bị thu hẹp do tác động từ Thuế tối thiểu toàn cầu, năng lực cạnh tranh quốc gia phụ thuộc vào hạ tầng kỹ thuật và chất lượng nguồn nhân lực phục vụ hệ thống dữ liệu lớn vượt mức 500 kW/rack:</div>
+                        
+                        <div class="formula-grid">
+                            <div class="formula-item">
+                                <h5>Nhân lực (Talent)</h5>
+                                Tập trung đào tạo, xây dựng cơ cấu và hoàn thiện quy mô mục tiêu đạt từ <strong>50.000 đến 100.000 kỹ sư</strong> chuyên ngành công nghiệp bán dẫn tầm nhìn đến năm 2050.
+                            </div>
+                            
+                            <div class="formula-item">
+                                <h5>Hạ tầng năng lượng sạch</h5>
+                                Triển khai cơ chế mua bán điện trực tiếp (<strong>DPPA</strong>), tích hợp lưu trữ năng lượng (<strong>BESS</strong>) và sẵn sàng cấu trúc nguồn nền phụ tải dài hạn bao gồm các dự án <strong>Điện hạt nhân</strong> nhằm bảo đảm tính ổn định 24/7.
+                            </div>
+                            
+                            <div class="formula-item">
+                                <h5>Cơ chế thử nghiệm (Sandbox)</h5>
+                                Xây dựng hành lang pháp lý đặc thù, áp dụng cơ chế <strong>miễn trừ trách nhiệm hành chính</strong> đối với các rủi ro trong hoạt động R&D, tạo môi trường an toàn thử nghiệm mô hình công nghệ đột phá.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="footer-wrapper">
+            <div class="footer-note">Cơ sở dữ liệu: Chứng khoán Mirae Asset Việt Nam.</div>
+            <div class="page-number">TRANG 2</div>
+        </div>
+    </div>
+
+</body>
+</html>
